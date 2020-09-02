@@ -1,0 +1,69 @@
+
+
+<div class="row">
+  
+  <div class="col-sm-6" *ngIf = "profSelecionado">
+    <app-titulo [titulo] = "'Cód. Professor:' + profSelecionado.id"></app-titulo>
+    <form [formGroup]= "professorForm" (submit) = "professorSubmit()">
+      <div class="form-group">
+        <label for="formGroupExampleInput">Nome</label>
+        <input type="text" formControlName="nome" class="form-control" >
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Disciplina</label>
+        <input type="text" formControlName="disciplina" class="form-control">
+      </div>
+      
+    </form>
+    <hr>
+    <button class="btn btn-success" [disabled]="!professorForm.valid">Enviar</button>
+    <button class="btn btn-outline-danger" (click) = "voltar()">Voltar</button>
+    <br>
+    
+  </div>
+  <div [ngClass]="{'col-sm-6': profSelecionado, 'col-sm-12': !profSelecionado}">
+    <app-titulo [titulo] = "titulo"></app-titulo>
+    <table class="table table-hover"  >
+      <thead>
+        <tr>
+          <th>Visualizar</th>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Disciplina</th>
+          <th scope="col">Opções</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor=" let prof of professores"  >
+          <td>
+            <button class="text-dark btn btn-sm btn-outline-warning" (click) = "profSelect(prof)">Detalhes</button>
+          </td>
+          <th scope="row" >{{prof.id}}</th>
+          <td>{{prof.nome}}</td>
+          <td>{{prof.disciplina}}</td>
+          <td>
+            
+            <div class="btn-group">
+              <button class="btn btn-sm btn-outline-primary" (click)="openModal(template)">alunos</button>
+            </div>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    
+  </div>
+  <div class="modal-body">
+    <button type="button" class="btn btn-sm btn-outline-danger" aria-label="Close" (click)="modalRef.hide()">
+      Fechar
+    </button>
+  </div>
+</ng-template>
